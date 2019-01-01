@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Joystick">
+
+    <RelativeLayout
+        android:id="@+id/outercircle"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:background="@drawable/purple_circle"
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:id="@+id/knob"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="100dp"
+            android:background="@drawable/grey_circle"
+            android:orientation="horizontal" >
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+</FrameLayout>
