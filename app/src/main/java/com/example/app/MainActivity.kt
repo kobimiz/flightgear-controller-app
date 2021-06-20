@@ -15,7 +15,7 @@ import kotlin.math.sin
 
 // TODO: rudder and throttle seekbars, MVVM.
 // TODO: remove disconnect button and disconnect automatically?
-//TODO: disable joystick when not connected?(not really needed because of try & catch) make knob stay in place? implement our own joystick? (if not, delete Joystick class and fragment)
+//TODO: disable joystick when not connected?(not really needed because of try & catch) make knob stay in place? implement our own joystick? (if not, delete Joystick class, xml fragment, xml circles)
 //TODO: presentation , video , README , class diagram, txt file with names ids and link to git
 class MainActivity : AppCompatActivity() {
 
