@@ -14,6 +14,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 // TODO: rudder and throttle seekbars, MVVM.
+//location of throttle: /controls/engines/current-engine/throttle
 // TODO: remove disconnect button and disconnect automatically?
 //TODO: disable joystick when not connected?(not really needed because of try & catch) make knob stay in place? implement our own joystick? (if not, delete Joystick class, xml fragment, xml circles)
 //TODO: presentation , video , README , class diagram, txt file with names ids and link to git
@@ -33,13 +34,19 @@ class MainActivity : AppCompatActivity() {
         var input : BufferedReader? = null
 
         val joystick = findViewById<View>(R.id.joystickView) as JoystickView
+        //joystick.setFixedCenter(false);
+        joystick.setAutoReCenterButton(false);
         joystick.setOnMoveListener { angle, strength ->
             val thread = Thread {
                 try {
-                    var aileron = sin(angle.toDouble())*strength/100;
-                    var elevator = cos(angle.toDouble())*strength/100;
-                    changeValue(out,input,"aileron",aileron.toString())
-                    changeValue(out,input,"elevator",elevator.toString())
+                    //if(fg!=null) {
+                        println("angle: "+angle)
+                        println("strength: "+strength)
+                        var aileron = cos(angle.toDouble()) * strength / 100;
+                        var elevator = sin(angle.toDouble()) * strength / 100;
+                        changeValue(out, input,"/controls/flight/", "aileron", aileron.toString())
+                        changeValue(out, input,"/controls/flight/", "elevator", elevator.toString())
+                    //}
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -48,16 +55,18 @@ class MainActivity : AppCompatActivity() {
         }
 
         fun start(ip:String,port:Int) {
-            println("trying to connect")
-            //use IPv4 address, in case of android emulator use 10.0.2.2
-            fg = Socket(ip, port)
-            println("connected")
-            out = PrintWriter(fg!!.getOutputStream(), true)
-            input = BufferedReader(InputStreamReader(fg!!.getInputStream()))
-            runOnUiThread {
-                disconnect.setEnabled(true)
-                connect.setEnabled(false)
-            }
+                println("trying to connect")
+                //use IPv4 address, in case of android emulator use 10.0.2.2
+                fg = Socket(ip, port)
+                println("connected")
+                out = PrintWriter(fg!!.getOutputStream(), true)
+                input = BufferedReader(InputStreamReader(fg!!.getInputStream()))
+                runOnUiThread {
+                    disconnect.setEnabled(true)
+                    connect.setEnabled(false)
+                    joystick.setEnabled(true);
+                }
+
         }
 
         fun stop() {
@@ -68,6 +77,7 @@ class MainActivity : AppCompatActivity() {
             runOnUiThread {
                 connect.setEnabled(true)
                 disconnect.setEnabled(false)
+                joystick.setEnabled(false);
             }
         }
 
@@ -96,9 +106,9 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-    fun changeValue(out:PrintWriter?,input:BufferedReader?,type:String,value:String) {
-        println("printing:"+"set /controls/flight/"+type+" "+value+"\r\n")
-        out!!.print("set /controls/flight/"+type+" "+value+"\r\n")
+    fun changeValue(out:PrintWriter?,input:BufferedReader?,location:String,type:String,value:String) {
+        println("printing: set "+location+type+" "+value+"\r\n")
+        out!!.print("set "+location+type+" "+value+"\r\n")
         out!!.flush()
         val resp: String = input!!.readLine()
         println("response: "+resp)
