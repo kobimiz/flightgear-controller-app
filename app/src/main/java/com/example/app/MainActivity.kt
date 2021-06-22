@@ -15,8 +15,8 @@ import kotlin.math.sin
 
 // TODO: rudder and throttle seekbars, MVVM.
 // TODO: remove disconnect button and disconnect automatically?
-//TODO: disable joystick when not connected?(not really needed because of try & catch) make knob stay in place? implement our own joystick? (if not, delete Joystick class, xml fragment, xml circles)
-//TODO: presentation , video , README , class diagram, txt file with names ids and link to git
+// TODO: disable joystick when not connected?(not really needed because of try & catch) make knob stay in place? implement our own joystick? (if not, delete Joystick class, xml fragment, xml circles)
+// TODO: presentation , video , README , class diagram, txt file with names ids and link to git
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,11 +33,11 @@ class MainActivity : AppCompatActivity() {
         var input : BufferedReader? = null
 
         val joystick = findViewById<View>(R.id.joystickView) as JoystickView
-        joystick.setOnMoveListener { angle, strength ->
+        joystick.setOnMoveListener { angle, strength : Int ->
             val thread = Thread {
                 try {
-                    var aileron = sin(angle.toDouble())*strength/100;
-                    var elevator = cos(angle.toDouble())*strength/100;
+                    val aileron = sin(angle.toDouble()) * strength / 100.0
+                    val elevator = cos(angle.toDouble()) * strength / 100.0
                     changeValue(out,input,"aileron",aileron.toString())
                     changeValue(out,input,"elevator",elevator.toString())
                 } catch (e: Exception) {
@@ -55,8 +55,8 @@ class MainActivity : AppCompatActivity() {
             out = PrintWriter(fg!!.getOutputStream(), true)
             input = BufferedReader(InputStreamReader(fg!!.getInputStream()))
             runOnUiThread {
-                disconnect.setEnabled(true)
-                connect.setEnabled(false)
+                disconnect.isEnabled = true
+                connect.isEnabled = false
             }
         }
 
@@ -66,8 +66,8 @@ class MainActivity : AppCompatActivity() {
             fg!!.close()
             println("closed connection")
             runOnUiThread {
-                connect.setEnabled(true)
-                disconnect.setEnabled(false)
+                connect.isEnabled = true
+                disconnect.isEnabled = false
             }
         }
 
@@ -96,12 +96,11 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-    fun changeValue(out:PrintWriter?,input:BufferedReader?,type:String,value:String) {
-        println("printing:"+"set /controls/flight/"+type+" "+value+"\r\n")
-        out!!.print("set /controls/flight/"+type+" "+value+"\r\n")
-        out!!.flush()
+    private fun changeValue(out:PrintWriter?,input:BufferedReader?,type:String,value:String) {
+        println("printing: set /controls/flight/$type $value\r\n")
+        out!!.print("set /controls/flight/$type $value\r\n")
+        out.flush()
         val resp: String = input!!.readLine()
-        println("response: "+resp)
-
+        println("response: $resp")
     }
 }
