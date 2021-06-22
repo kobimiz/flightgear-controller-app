@@ -14,6 +14,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 // TODO: rudder and throttle seekbars, MVVM.
+//location of throttle: /controls/engines/current-engine/throttle
 // TODO: remove disconnect button and disconnect automatically?
 // TODO: disable joystick when not connected?(not really needed because of try & catch) make knob stay in place? implement our own joystick? (if not, delete Joystick class, xml fragment, xml circles)
 // TODO: presentation , video , README , class diagram, txt file with names ids and link to git
@@ -33,13 +34,19 @@ class MainActivity : AppCompatActivity() {
         var input : BufferedReader? = null
 
         val joystick = findViewById<View>(R.id.joystickView) as JoystickView
+        // joystick.setFixedCenter(false);
+        joystick.isAutoReCenterButton = false
         joystick.setOnMoveListener { angle, strength : Int ->
             val thread = Thread {
                 try {
-                    val aileron = sin(angle.toDouble()) * strength / 100.0
-                    val elevator = cos(angle.toDouble()) * strength / 100.0
-                    changeValue(out,input,"aileron",aileron.toString())
-                    changeValue(out,input,"elevator",elevator.toString())
+                    //if(fg!=null) {
+                    println("angle: $angle")
+                    println("strength: $strength")
+                    val aileron = cos(angle.toDouble()) * strength / 100.0
+                    val elevator = sin(angle.toDouble()) * strength / 100.0
+                    changeValue(out, input,"/controls/flight/", "aileron", aileron.toString())
+                    changeValue(out, input,"/controls/flight/", "elevator", elevator.toString())
+                    //}
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -57,6 +64,7 @@ class MainActivity : AppCompatActivity() {
             runOnUiThread {
                 disconnect.isEnabled = true
                 connect.isEnabled = false
+                joystick.isEnabled = true
             }
         }
 
@@ -68,6 +76,7 @@ class MainActivity : AppCompatActivity() {
             runOnUiThread {
                 connect.isEnabled = true
                 disconnect.isEnabled = false
+                joystick.isEnabled = false
             }
         }
 
@@ -96,9 +105,9 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-    private fun changeValue(out:PrintWriter?,input:BufferedReader?,type:String,value:String) {
-        println("printing: set /controls/flight/$type $value\r\n")
-        out!!.print("set /controls/flight/$type $value\r\n")
+    private fun changeValue(out:PrintWriter?,input:BufferedReader?,location:String,type:String,value:String) {
+        println("printing: set $location$type $value\r\n")
+        out!!.print("set $location$type $value\r\n")
         out.flush()
         val resp: String = input!!.readLine()
         println("response: $resp")
