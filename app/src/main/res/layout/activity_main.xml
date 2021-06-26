@@ -41,20 +41,54 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="disconnect"
-            android:layout_marginLeft="20px"
+            android:layout_marginLeft="15dp"
             android:enabled="false"/>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-    <io.github.controlwear.virtual.joystick.android.JoystickView
-        android:id="@+id/joystickView"
-        android:layout_width="290dp"
-        android:layout_height="337dp"
-        app:JV_backgroundColor="#673AB7"
-        app:JV_borderColor="#673AB7"
-        app:JV_borderWidth="4dp"
-        app:JV_buttonColor="#A04FAE"
-        app:JV_buttonSizeRatio="15%"
-        app:JV_fixedCenter="false" />
+        <com.example.app.VerticalSeekBar
+            android:id="@+id/throttle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:max="100"
+            android:min="0"
+            android:progress="50" />
+
+        <io.github.controlwear.virtual.joystick.android.JoystickView
+            android:id="@+id/joystickView"
+            android:layout_width="290dp"
+            android:layout_height="337dp"
+            app:JV_backgroundColor="#673AB7"
+            app:JV_borderColor="#673AB7"
+            app:JV_borderWidth="4dp"
+            app:JV_buttonColor="#A04FAE"
+            app:JV_buttonSizeRatio="15%"
+            app:JV_fixedCenter="false" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <SeekBar
+            android:id="@+id/rudder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="200"
+            android:min="0"
+            android:progress="100"/>
+
+        <!--<TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="rudder"
+            android:gravity="center_horizontal" />-->
+    </LinearLayout>
+
     <!--<androidx.fragment.app.FragmentContainerView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/fragment_container_view"
