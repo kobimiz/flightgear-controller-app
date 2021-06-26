@@ -7,6 +7,8 @@ import android.widget.EditText
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import com.example.app.databinding.ActivityMainBinding
 import io.github.controlwear.virtual.joystick.android.JoystickView
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -15,25 +17,27 @@ import java.net.Socket
 import kotlin.math.cos
 import kotlin.math.sin
 
-// TODO: rudder and throttle seekbars, MVVM.
+// TODO: MVVM.
 //TODO: use binding instead?
-//location of throttle: /controls/engines/current-engine/throttle
-// TODO: remove disconnect button and disconnect automatically?
-// TODO: disable joystick when not connected?(not really needed because of try & catch) make knob stay in place? implement our own joystick? (if not, delete Joystick class, xml fragment, xml circles)
+//TODO: delete useless imports
+// TODO: customize JoyStick
+// TODO: remove disconnect button and disconnect automatically? (& onstop, ondestory)
+
 // TODO: presentation , video , README , class diagram, txt file with names ids and link to git
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        //setContentView(R.layout.activity_main)
 
-        val connect = findViewById<Button>(R.id.connect)
-        val disconnect = findViewById<Button>(R.id.disconnect)
-        val ip = findViewById<EditText>(R.id.ip)
-        val port = findViewById<EditText>(R.id.port)
-        val joystick = findViewById<View>(R.id.joystickView) as JoystickView
-        val rudder = findViewById<SeekBar>(R.id.rudder)
-        val throttle = findViewById<VerticalSeekBar>(R.id.throttle)
+        val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main);
+        val connect = binding.connect
+        val disconnect = binding.disconnect
+        val ip = binding.ip
+        val port = binding.port
+        val joystick = binding.joystickView
+        val rudder = binding.rudder
+        val throttle = binding.throttle
 
         var fg : Socket? = null
         var out : PrintWriter? =null
@@ -41,8 +45,7 @@ class MainActivity : AppCompatActivity() {
 
 
         joystick.isEnabled = false
-        joystick.setFixedCenter(false)
-        joystick.isAutoReCenterButton = false
+
         joystick.setOnMoveListener { angle, strength : Int ->
             val thread = Thread {
                 try {

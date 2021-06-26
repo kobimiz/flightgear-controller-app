@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+
+    <data>
+        <!-- insert here variables..
+        <variable
+            name="viewModel"
+            type="com.example.app.viewModel" />-->
+    </data>
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity"
     android:gravity="center_horizontal"
     android:padding="20dp">
-
-
     <EditText
         android:id="@+id/ip"
         android:layout_width="wrap_content"
@@ -57,7 +63,7 @@
             android:min="0"
             android:progress="50" />
 
-        <io.github.controlwear.virtual.joystick.android.JoystickView
+        <com.example.app.JoyStick
             android:id="@+id/joystickView"
             android:layout_width="290dp"
             android:layout_height="337dp"
@@ -80,20 +86,7 @@
             android:max="200"
             android:min="0"
             android:progress="100"/>
-
-        <!--<TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:text="rudder"
-            android:gravity="center_horizontal" />-->
     </LinearLayout>
 
-    <!--<androidx.fragment.app.FragmentContainerView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/fragment_container_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:name="com.example.app.Joystick" />-->
-
 </LinearLayout>
+</layout>
