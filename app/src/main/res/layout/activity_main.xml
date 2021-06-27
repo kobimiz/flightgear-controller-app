@@ -17,7 +17,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    android:padding="20dp">
+    android:padding="20dp"
+    android:background="@drawable/gradient"
+    android:id="@+id/layout">
     <EditText
         android:id="@+id/ip"
         android:layout_width="wrap_content"
@@ -75,10 +77,10 @@
             android:id="@+id/joystickView"
             android:layout_width="290dp"
             android:layout_height="337dp"
-            app:JV_backgroundColor="#673AB7"
-            app:JV_borderColor="#673AB7"
+            app:JV_backgroundColor="#6153CC"
+            app:JV_borderColor="#6153CC"
             app:JV_borderWidth="4dp"
-            app:JV_buttonColor="#A04FAE"
+            app:JV_buttonColor="@color/purple_500"
             app:JV_buttonSizeRatio="15%"
             app:JV_fixedCenter="false"
             android:enabled="@{buttonsViewModel.joystickIsEnabled}" />
