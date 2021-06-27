@@ -30,14 +30,11 @@ class ButtonsViewModel(private val mainModel: MainModel) : ViewModel() {
         println("connected")
         mainModel.out = PrintWriter(fg!!.getOutputStream(), true)
         mainModel.input = BufferedReader(InputStreamReader(fg!!.getInputStream()))
-        // TODO run on ui thread
-//        runOnUiThread {
         _disconnectIsEnabled.postValue(true)
         _connectIsEnabled.postValue(false)
         _joystickIsEnabled.postValue(true)
         _rudderIsEnabled.postValue(true)
         _throttleIsEnabled.postValue(true)
-//        }
     }
 
     private fun stop() {
@@ -45,15 +42,11 @@ class ButtonsViewModel(private val mainModel: MainModel) : ViewModel() {
         mainModel.out!!.close()
         fg!!.close()
         println("closed connection")
-        // TODO run on ui thread
-        //        runOnUiThread {
-        //TODO: take care of these through xml
         _connectIsEnabled.postValue(true)
         _disconnectIsEnabled.postValue(false)
         _joystickIsEnabled.postValue(false)
         _rudderIsEnabled.postValue(false)
         _throttleIsEnabled.postValue(false)
-    //        }
     }
     fun connect(ip:String, port:String) {
         val thread = Thread {
@@ -62,10 +55,6 @@ class ButtonsViewModel(private val mainModel: MainModel) : ViewModel() {
                 start(ip ,portInt)
             } catch (e: Exception) {
                 e.printStackTrace()
-                // TODO this
-//                runOnUiThread{
-                    // Toast.makeText(applicationContext, "couldn't connect - please recheck ip and port.", Toast.LENGTH_LONG).show()
-//                }
             }
         }
         thread.start()

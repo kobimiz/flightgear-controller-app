@@ -5,13 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.app.databinding.ActivityMainBinding
 
-// TODO: MVVM.
-//TODO: use binding instead?
-//TODO: delete useless imports
-// TODO: customize JoyStick
-// TODO: remove disconnect button and disconnect automatically? (& onstop, ondestory)
-
-// TODO: presentation , video , README , class diagram, txt file with names ids and link to git
 class MainActivity : AppCompatActivity() {
     private var mainModel: MainModel = MainModel()
     private var buttonsViewModel: ButtonsViewModel = ButtonsViewModel(mainModel)
