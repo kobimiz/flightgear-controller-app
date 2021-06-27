@@ -30,7 +30,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_main)
 
-        val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main);
+        /**
+         * CONSTANTS
+         */
+        val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         val connect = binding.connect
         val disconnect = binding.disconnect
         val ip = binding.ip
@@ -39,13 +42,23 @@ class MainActivity : AppCompatActivity() {
         val rudder = binding.rudder
         val throttle = binding.throttle
 
+        /**
+         * VARIABLES
+         */
         var fg : Socket? = null
         var out : PrintWriter? =null
         var input : BufferedReader? = null
 
 
+        //TODO: take care of these through xml
+        //initially disabling usage of the joystick and seekbars
         joystick.isEnabled = false
+        rudder.isEnabled = false
+        throttle.isEnabled = false
 
+        /**
+         * move listeners
+         */
         joystick.setOnMoveListener { angle, strength : Int ->
             val thread = Thread {
                 try {
@@ -112,6 +125,9 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+        /**
+         * functions
+         */
             fun start(ip:String,port:Int) {
             println("trying to connect")
             //use IPv4 address, in case of android emulator use 10.0.2.2
@@ -120,9 +136,13 @@ class MainActivity : AppCompatActivity() {
             out = PrintWriter(fg!!.getOutputStream(), true)
             input = BufferedReader(InputStreamReader(fg!!.getInputStream()))
             runOnUiThread {
+                //TODO: take care of these through xml
                 disconnect.isEnabled = true
                 connect.isEnabled = false
                 joystick.isEnabled = true
+                rudder.isEnabled = true
+                throttle.isEnabled = true
+
             }
         }
 
@@ -132,9 +152,12 @@ class MainActivity : AppCompatActivity() {
             fg!!.close()
             println("closed connection")
             runOnUiThread {
+                //TODO: take care of these through xml
                 connect.isEnabled = true
                 disconnect.isEnabled = false
                 joystick.isEnabled = false
+                rudder.isEnabled = false
+                throttle.isEnabled = false
             }
         }
 

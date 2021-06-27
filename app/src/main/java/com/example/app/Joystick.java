@@ -3,7 +3,6 @@ package com.example.app;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
-import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -12,14 +11,10 @@ import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
-import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.ViewConfiguration;
 
-import androidx.annotation.Nullable;
-
-public class JoyStick extends View
+public class Joystick extends View
         implements
         Runnable {
 
@@ -229,12 +224,12 @@ public class JoyStick extends View
      * @param context The Context the JoystickView is running in, through which it can
      *        access the current theme, resources, etc.
      */
-    public JoyStick(Context context) {
+    public Joystick(Context context) {
         this(context, null);
     }
 
 
-    public JoyStick(Context context, AttributeSet attrs, int defStyleAttr) {
+    public Joystick(Context context, AttributeSet attrs, int defStyleAttr) {
         this(context, attrs);
     }
 
@@ -247,7 +242,7 @@ public class JoyStick extends View
      *        access the current theme, resources, etc.
      * @param attrs The attributes of the XML tag that is inflating the JoystickView.
      */
-    public JoyStick(Context context, AttributeSet attrs) {
+    public Joystick(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         TypedArray styledAttributes = context.getTheme().obtainStyledAttributes(

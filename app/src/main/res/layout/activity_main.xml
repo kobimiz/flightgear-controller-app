@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <com.example.app.VerticalSeekBar
+        <com.example.app.VerticalSeekbar
             android:id="@+id/throttle"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -63,7 +63,7 @@
             android:min="0"
             android:progress="50" />
 
-        <com.example.app.JoyStick
+        <com.example.app.Joystick
             android:id="@+id/joystickView"
             android:layout_width="290dp"
             android:layout_height="337dp"
